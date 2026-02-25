@@ -43,7 +43,7 @@ async def handler(websocket):
                             "mode": req_mode,
                             "action": action,
                             "status": "success",
-                            "message": f"Connect to port{data.get("port")}",
+                            "message": f"Connect to port {data.get('port')}",
                         }
 
                         print(f"[Sending] {payload}")
@@ -54,7 +54,7 @@ async def handler(websocket):
                             "mode": req_mode,
                             "action": action,
                             "status": "failed",
-                            "message": f"Failed to connect to port {data.get("port")}",
+                            "message": f"Failed to connect to port {data.get('port')}",
                         }
 
                         print(f"[Sending] {payload}")
