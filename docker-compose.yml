@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  backend:
+    image: my-backend:latest
+    ports:
+      - "8765:8765"
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  frontend:
+    image: my-frontend:latest
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend

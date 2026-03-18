@@ -12,35 +12,27 @@ Before starting the installation, ensure you have the following software install
 
 ## Installation Steps
 
-### 1. Docker Setup (Interface)
+Follow these steps to deploy both the Frontend and Backend services with a single command:
 
-Follow these steps to deploy the Dashboard using Docker:
+### 1. Prepare Your Files
+Ensure the following 3 files are located in the same directory:
+1.  `frontend-image.tar` (The Web UI Image)
+2.  `backend-image.tar` (The Python Control System Image)
+3.  `docker-compose.yml` (The configuration file to link both systems)
 
-1.  **Prepare File:** Ensure you have the `basesystem.tar` file in your local directory.
-2.  **Load Image:** Open your terminal, navigate to the directory containing the file, and run:
-    ```bash
-    docker load -i basesystem.tar
-    ```
-3.  **Run Container:** Start the UI container with the following command:
-    ```bash
-    docker run -d -p 3000:80 --name interface basesystem:latest
-    ```
-    > The UI will be accessible at [http://localhost:3000](http://localhost:3000) once the container is running.
+### 2. Load Docker Images
+Open your Terminal or Command Prompt in that directory and run:
+```bash
+docker load -i frontend-image.tar
+docker load -i backend-image.tar
+```
 
-### 2. Python Setup (Backend Server)
-
-*It is recommended to use a virtual environment (venv) for the following steps.*
-
-1.  **Install Requirements:**
-    Install all necessary dependencies using pip:
-    ```bash
-    pip install -r requirements.txt
-    ```
-2.  **Run Server:**
-    Execute the server file:
-    ```bash
-    python server.py
-    ```
+### 3. Start the System
+Launch the entire stack using Docker Compose:
+```bash
+docker-compose up -d
+```
+Status: Once the terminal shows Started, the dashboard will be live at: http://localhost:3000
 
 ## How to Use
 
@@ -55,30 +47,22 @@ Once `server.py` is running, your terminal should display:
 ### How to Stop and Remove the Container
 If you need to stop the system or clean up the container, use these commands:
 
-* **To Stop the container:** (The container remains but stops running)
+* Stops and removes all containers and networks.
     ```bash
-    docker stop interface
+    docker-compose down
     ```
-* **To Remove the container:** (Deletes the container instance)
+* Verifies if both Frontend and Backend are currently running.
     ```bash
-    docker rm -f interface
+    docker-compose ps
     ```
-
-### How to Restart or Run Again
-Depending on what you did in the previous step, follow these instructions to run the system again:
-
-* **If you only stopped it:** Just start it again:
+* View error messages or activity from the Python Backend.
     ```bash
-    docker start interface
+    docker-compose logs backend
     ```
-* **If you removed it (or want to run a fresh instance):**
-    Run the original `docker run` command again:
+* Restarts all containers without deleting them.
     ```bash
-    docker run -d -p 3000:80 --name interface basesystem:latest
+    docker-compose restart
     ```
-* **If you updated the `.tar` file:**
-    You must remove the old container and image first, then re-run the `docker load` and `docker run` steps.
-
 ---
 
 > [!TIP]
